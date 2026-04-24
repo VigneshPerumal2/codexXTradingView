@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+MCP_DIR="$ROOT_DIR/tradingview-mcp"
+NODE_BIN="${NODE_BIN:-/Users/vigy/.nvm/versions/node/v22.14.0/bin/node}"
+PORT="${TV_CDP_PORT:-9333}"
+
+echo "== TradingView Codex Doctor =="
+echo "Workspace: $ROOT_DIR"
+echo "MCP repo:   $MCP_DIR"
+echo "Node:       $("$NODE_BIN" --version)"
+echo "Port:       $PORT"
+echo
+
+echo "== App =="
+if [ -d "/Applications/TradingView.app" ]; then
+  echo "TradingView.app: present"
+else
+  echo "TradingView.app: missing"
+fi
+echo
+
+echo "== Ports =="
+lsof -nP -iTCP:9222 -sTCP:LISTEN 2>/dev/null || echo "No listener on 9222"
+lsof -nP -iTCP:"$PORT" -sTCP:LISTEN 2>/dev/null || echo "No listener on $PORT"
+echo
+
+echo "== Codex MCP =="
+codex mcp get tradingview || true
+echo
+
+echo "== CDP Version =="
+curl --max-time 3 --silent --show-error "http://127.0.0.1:$PORT/json/version" || true
+echo
+
+echo "== MCP Health =="
+TV_CDP_PORT="$PORT" "$ROOT_DIR/scripts/tv-cli" status || true

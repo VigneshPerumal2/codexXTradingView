@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+MCP_DIR="$ROOT_DIR/tradingview-mcp"
+NODE_BIN="${NODE_BIN:-/Users/vigy/.nvm/versions/node/v22.14.0/bin/node}"
+
+export TV_CDP_PORT="${TV_CDP_PORT:-9333}"
+
+cd "$MCP_DIR"
+exec "$NODE_BIN" src/cli/index.js "$@"

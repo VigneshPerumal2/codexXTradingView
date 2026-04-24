@@ -1,0 +1,43 @@
+# Copy to ~/.codex/rules/default.rules, then restart Codex.
+# Keep these narrow: read-only helpers are allowed, relaunch/mutation prompts.
+
+prefix_rule(
+    pattern = ["./scripts/tv-health"],
+    decision = "allow",
+    justification = "Read-only TradingView MCP health check for this workspace",
+    match = ["./scripts/tv-health"],
+)
+
+prefix_rule(
+    pattern = ["./scripts/tv-doctor"],
+    decision = "allow",
+    justification = "Read-only TradingView MCP diagnostics for this workspace",
+    match = ["./scripts/tv-doctor"],
+)
+
+prefix_rule(
+    pattern = ["./scripts/tv-cli", ["status", "state", "quote", "values"]],
+    decision = "allow",
+    justification = "Read-only TradingView CLI checks for this workspace",
+    match = [
+        "./scripts/tv-cli status",
+        "./scripts/tv-cli state",
+        "./scripts/tv-cli quote",
+        "./scripts/tv-cli values",
+    ],
+)
+
+prefix_rule(
+    pattern = ["./scripts/tv-launch-debug"],
+    decision = "prompt",
+    justification = "Relaunching TradingView may close the current app session",
+    match = ["./scripts/tv-launch-debug"],
+)
+
+prefix_rule(
+    pattern = ["/Users/vigy/.nvm/versions/node/v22.14.0/bin/node", "src/cli/index.js", "launch"],
+    decision = "prompt",
+    justification = "Launching TradingView from the MCP CLI can close or replace the running app session",
+    match = ["/Users/vigy/.nvm/versions/node/v22.14.0/bin/node src/cli/index.js launch"],
+)
+

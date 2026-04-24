@@ -1,0 +1,58 @@
+# Copy the relevant sections into ~/.codex/config.toml, then restart Codex.
+
+[mcp_servers.tradingview]
+command = "/Users/vigy/.nvm/versions/node/v22.14.0/bin/node"
+args = ["/Users/vigy/Documents/New project/tradingview-mcp/src/server.js"]
+default_tools_approval_mode = "prompt"
+
+[mcp_servers.tradingview.env]
+TV_CDP_PORT = "9333"
+
+[mcp_servers.openaiDeveloperDocs]
+url = "https://developers.openai.com/mcp"
+
+[mcp_servers.tradingview.tools.tv_health_check]
+approval_mode = "approve"
+
+[mcp_servers.tradingview.tools.chart_get_state]
+approval_mode = "approve"
+
+[mcp_servers.tradingview.tools.quote_get]
+approval_mode = "approve"
+
+[mcp_servers.tradingview.tools.data_get_study_values]
+approval_mode = "approve"
+
+[mcp_servers.tradingview.tools.data_get_ohlcv]
+approval_mode = "approve"
+
+[mcp_servers.tradingview.tools.data_get_pine_lines]
+approval_mode = "approve"
+
+[mcp_servers.tradingview.tools.data_get_pine_labels]
+approval_mode = "approve"
+
+[mcp_servers.tradingview.tools.data_get_pine_tables]
+approval_mode = "approve"
+
+[mcp_servers.tradingview.tools.data_get_pine_boxes]
+approval_mode = "approve"
+
+[mcp_servers.tradingview.tools.chart_get_visible_range]
+approval_mode = "approve"
+
+[mcp_servers.tradingview.tools.symbol_search]
+approval_mode = "approve"
+
+[mcp_servers.tradingview.tools.layout_list]
+approval_mode = "approve"
+
+[mcp_servers.tradingview.tools.tab_list]
+approval_mode = "approve"
+
+[mcp_servers.tradingview.tools.watchlist_get]
+approval_mode = "approve"
+
+[mcp_servers.tradingview.tools.alert_list]
+approval_mode = "approve"
+
