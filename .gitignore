@@ -4,4 +4,11 @@ node_modules/
 screenshots/
 temp_*
 scripts/current.pine
-
+.env
+.env.local
+.next/
+dist/
+coverage/
+*.tsbuildinfo
+data/*.sqlite
+data/*.sqlite-*

@@ -1,0 +1,29 @@
+{
+  "name": "codexxtradingview",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Local-first Codex + TradingView paper-trading operating system.",
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "tradingview-mcp"
+  ],
+  "scripts": {
+    "build": "npm run build --workspace @codex-tv/shared && npm run build --workspace @codex-tv/orchestrator && npm run build --workspace @codex-tv/dashboard",
+    "dev:dashboard": "npm run dev --workspace @codex-tv/dashboard",
+    "dev:orchestrator": "npm run dev --workspace @codex-tv/orchestrator",
+    "orchestrator": "npm run start --workspace @codex-tv/orchestrator",
+    "test": "npm run build --workspace @codex-tv/shared && node --import tsx --test packages/shared/src/__tests__/*.test.ts apps/orchestrator/src/__tests__/*.test.ts",
+    "typecheck": "tsc -b",
+    "lint": "npm run typecheck"
+  },
+  "engines": {
+    "node": ">=22.14.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.3",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3"
+  }
+}

@@ -4,7 +4,9 @@
 
 This workspace is configured for Codex to control the local TradingView Desktop app through `tradingview-mcp` and Chrome DevTools Protocol on loopback only.
 
-Use this setup for human-in-the-loop chart analysis, Pine Script development, screenshots, layout inspection, and local workflow automation. Do not treat tool output as financial advice, and do not perform automated trading or machine-driven order decisions.
+Use this setup for human-in-the-loop chart analysis, Pine Script development, screenshots, layout inspection, local workflow automation, and paper-trading research automation. Do not treat tool output as financial advice.
+
+V1 can generate simulated paper trades and hypothetical P&L only. Do not add real broker execution, live order placement, account linking, or “buy/sell now” messaging without a separate explicit user request, safety review, and audited phase plan.
 
 ## Local Defaults
 
@@ -21,6 +23,20 @@ Use this setup for human-in-the-loop chart analysis, Pine Script development, sc
 - Check MCP health and chart state: `./scripts/tv-health`
 - Run any TradingView CLI command: `./scripts/tv-cli <command>`
 - Diagnose setup: `./scripts/tv-doctor`
+- Run the paper daemon locally: `./scripts/paper-os`
+- Run the dashboard: `./scripts/paper-dashboard`
+- Generate a paper summary: `./scripts/paper-summary morning` or `./scripts/paper-summary evening`
+- Verify paper OS code: `npm test` and `npm run typecheck`
+
+## Paper-Trading OS Workflow
+
+- Shared deterministic logic lives in `packages/shared`.
+- The daemon lives in `apps/orchestrator` and stores V1 state in local SQLite under `data/`.
+- The dashboard lives in `apps/dashboard` and should remain clear that P&L is hypothetical.
+- TradingView reads should go through the existing bridge and helper scripts, especially `state`, `quote`, `ohlcv --summary`, `values`, and Pine read tools.
+- The order path is `StrategyAgent -> RiskManagerAgent -> PaperExecutionAgent`; no paper fill may bypass risk checks.
+- Every decision should preserve timestamp, snapshot ID, strategy ID, risk result, confidence/rationale, and mode.
+- Summary text must say “paper-trading research summary” and must not contain direct buy/sell instructions.
 
 ## TradingView Tool Workflow
 
@@ -36,7 +52,8 @@ Use this setup for human-in-the-loop chart analysis, Pine Script development, sc
 - Ask before mutating chart state unless the user explicitly requested the mutation.
 - Treat `ui_evaluate`, raw coordinate clicks, keyboard automation, Pine saves, alerts, drawings, replay trades, and batch operations as high-risk.
 - Avoid piping TradingView stream data to external services without explicit user approval.
-- Keep TradingView data display-oriented and human-reviewed; do not build non-display automated trading workflows from this project.
+- Keep live-money workflows out of this project phase. V1 automation is paper-only, local-first, and research-focused.
+- Keep `ENABLE_LIVE_BROKER=false`; if a config attempts to enable it, fail closed.
 
 ## Context Rules
 

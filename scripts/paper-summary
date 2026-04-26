@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+KIND="${1:-morning}"
+
+export TV_CDP_PORT="${TV_CDP_PORT:-9333}"
+export PAPER_TRADING_MODE="${PAPER_TRADING_MODE:-paper}"
+export ENABLE_LIVE_BROKER="false"
+
+cd "$ROOT_DIR"
+exec npm run "summary:$KIND" --workspace @codex-tv/orchestrator

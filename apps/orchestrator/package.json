@@ -1,0 +1,26 @@
+{
+  "name": "@codex-tv/orchestrator",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsx src/index.ts --local-loop",
+    "start": "node dist/index.js",
+    "once": "tsx src/index.ts --once",
+    "summary:morning": "tsx src/index.ts --summary morning",
+    "summary:evening": "tsx src/index.ts --summary evening",
+    "test": "node --import tsx --test src/__tests__/*.test.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@codex-tv/shared": "0.1.0",
+    "better-sqlite3": "^11.9.1",
+    "bullmq": "^5.34.0",
+    "ioredis": "^5.6.1",
+    "twilio": "^5.4.5"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13"
+  }
+}
